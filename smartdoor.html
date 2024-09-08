@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Door Lock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border: 2px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .button-lock {
+            background-color: #f44336;
+        }
+
+        .button-lock:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Smart Door Lock</h1>
+    
+    <img src="http://your-esp32-cam-ip-address/capture" id="camera-stream" alt="Camera Stream">
+    
+    <div>
+        <button class="button button-unlock" onclick="sendCommand('unlock')">Unlock Door</button>
+        <button class="button button-lock" onclick="sendCommand('lock')">Lock Door</button>
+    </div>
+
+    <script>
+        function sendCommand(command) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/control?cmd=" + command, true);
+            xhttp.send();
+        }
+
+        function updateImage() {
+            var image = document.getElementById("camera-stream");
+            image.src = "http://your-esp32-cam-ip-address/capture?" + new Date().getTime();
+        }
+
+        setInterval(updateImage, 5000); // Update image every 5 seconds
+    </script>
+
+</body>
+</html>
